@@ -1,0 +1,56 @@
+
+name: 'proyecto_de_ccp'
+version: '1.0.0'
+config-version: 2
+
+profile: 'default'
+
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+
+# VARIABLES ========================================
+vars:
+  fecha_referencia: '2016-07-01'
+  # fecha que usaremos para nuestros modelos, ya que son datos antiguos
+  # y entendemos que el momento en que tenían sentido es justo ese
+  # tras acabar la temporada y antes de empezar la siguiente.
+
+
+
+
+#===================================================================
+# MODELOS
+#===================================================================
+models:
+  proyecto_de_ccp:
+    
+    # SILVER ---------------------------------------
+    staging:
+      +materialized: view
+      +database: "{{ env_var('DBT_ENVIRONMENTS','FAIL') }}_SILVER_PROYECTO"
+      +schema: STAGING
+
+    # SILVER INTERMEDIATE ---------------------------
+    intermediate:
+      +materialized: view    # cambiar a table si va lento, aunque aumente costo de almacenamiento.
+      +database: "{{ env_var('DBT_ENVIRONMENTS','FAIL') }}_SILVER_PROYECTO"
+      +schema: INTERMEDIATE
+
+    # GOLD ------------------------------------------
+    marts:
+      +materialized: table
+      +database: "{{ env_var('DBT_ENVIRONMENTS','FAIL') }}_GOLD_PROYECTO"
+      +schema: CORE
+      
+      #dentro de marts irian: /empresa1 y /empresa2 (ó equipo1 y equipo2) 
