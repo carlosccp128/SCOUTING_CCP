@@ -132,6 +132,13 @@ sources:
       # player - Lista de jugadores observados
       #------------------------------------------------------------
       - name: player
+        description: Lista de jugadores observados.
+        data_tests:
+          - dbt_utils.unique_combination_of_columns:
+              arguments:
+                - player_name
+                - birthday
+
         columns:
           - name: id
             description: >
@@ -186,6 +193,10 @@ sources:
       # player_f15_anual - Tabla anual de todos los jugadores
       #------------------------------------------------------------
       - name: player_f15_annual
+        description: >
+          Lista ANUAL de todos los jugadores que hay. Se actualiza una vez al año.
+          Incluye tanto jugadores que se están siguiendo como los que no.
+
         columns:
           - name: sofifa_id
             description: ID del jugador.
@@ -403,7 +414,8 @@ sources:
       # player_attributes - Atributos de los jugadores
       #------------------------------------------------------------
       - name: player_attributes
-        description: Atributos de los jugadores.
+        description: Atributos de los jugadores. Aquí nos actualizan los informes de los jugadores.
+      
         config: #Aunque salga subrayado como error, corre el source freshness.
                 #Aparece porque van actualizando las versiones y la nomenclatura de dbt.
           loaded_at_field: date
