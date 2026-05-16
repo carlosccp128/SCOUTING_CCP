@@ -1,0 +1,269 @@
+# 
+
+version: 2
+
+sources:
+  - name: scouting
+    description: >
+      Datos crudos de las fuentes de origen, que nos pasa nuestro cliente
+      con los que quieren que desarrollemos nuestros modelos.
+    
+    schema: raw
+    database: "{{ env_var('DBT_ENVIRONMENTS','FAIL') }}_BRONZE_SCOUTING"
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+
+    tables:
+
+      #----------------------------------------------------------
+      # country - Países ligas observadas
+      #----------------------------------------------------------
+      - name: country
+        description: Países en los que se realiza seguimiento a jugadores.
+        columns:
+          - name: id
+            description: >
+              ID del pais, coincide con id_league y country_id de la tabla league.
+              Lo usaremos de conector entre ligas y países y después lo descartaremos.
+            data_type: number
+            data_tests:
+              - unique
+              - not_null
+
+          - name: name
+            description: Nombre del país en inglés.
+            data_type: varchar
+            data_tests:
+              - unique
+              - not_null
+
+
+      - name: league
+        columns:
+          - name: id
+            data_type: number
+          - name: country_id
+            data_type: number
+          - name: name
+            data_type: varchar
+
+      - name: player
+        columns:
+          - name: id
+            data_type: number
+          - name: player_api_id
+            data_type: number
+          - name: player_name
+            data_type: varchar
+          - name: player_fifa_api_id
+            data_type: number
+          - name: birthday
+            data_type: timestamp_ntz
+          - name: height
+            data_type: number
+          - name: weight
+            data_type: number
+
+      - name: player_attributes
+        description: 
+        #config: ME ESTÁ DANDO ERROR SI LO PONGO.
+        loaded_at_field: date
+        freshness:
+          warn_after:  {count: 24, period: hour}
+          #error_after: {count: 48, period: hour}
+        
+        columns:
+          - name: id
+            data_type: number
+          - name: player_fifa_api_id
+            data_type: number
+          - name: player_api_id
+            data_type: number
+          - name: date
+            data_type: timestamp_ntz
+          - name: overall_rating
+            data_type: number
+          - name: potential
+            data_type: number
+          - name: preferred_foot
+            data_type: varchar
+          - name: attacking_work_rate
+            data_type: varchar
+          - name: defensive_work_rate
+            data_type: varchar
+          - name: crossing
+            data_type: number
+          - name: finishing
+            data_type: number
+          - name: heading_accuracy
+            data_type: number
+          - name: short_passing
+            data_type: number
+          - name: volleys
+            data_type: number
+          - name: dribbling
+            data_type: number
+          - name: curve
+            data_type: number
+          - name: free_kick_accuracy
+            data_type: number
+          - name: long_passing
+            data_type: number
+          - name: ball_control
+            data_type: number
+          - name: acceleration
+            data_type: number
+          - name: sprint_speed
+            data_type: number
+          - name: agility
+            data_type: number
+          - name: reactions
+            data_type: number
+          - name: balance
+            data_type: number
+          - name: shot_power
+            data_type: number
+          - name: jumping
+            data_type: number
+          - name: stamina
+            data_type: number
+          - name: strength
+            data_type: number
+          - name: long_shots
+            data_type: number
+          - name: aggression
+            data_type: number
+          - name: interceptions
+            data_type: number
+          - name: positioning
+            data_type: number
+          - name: vision
+            data_type: number
+          - name: penalties
+            data_type: number
+          - name: marking
+            data_type: number
+          - name: standing_tackle
+            data_type: number
+          - name: sliding_tackle
+            data_type: number
+          - name: gk_diving
+            data_type: number
+          - name: gk_handling
+            data_type: number
+          - name: gk_kicking
+            data_type: number
+          - name: gk_positioning
+            data_type: number
+          - name: gk_reflexes
+            data_type: number
+
+      - name: player_f15_annual
+        columns:
+          - name: sofifa_id
+            data_type: number
+          - name: short_name
+            data_type: varchar
+          - name: long_name
+            data_type: varchar
+          - name: player_positions
+            data_type: varchar
+          - name: overall
+            data_type: number
+          - name: potential
+            data_type: number
+          - name: value_eur
+            data_type: number
+          - name: wage_eur
+            data_type: number
+          - name: dob
+            data_type: date
+          - name: height_cm
+            data_type: number
+          - name: weight_kg
+            data_type: number
+          - name: club_team_id
+            data_type: number
+          - name: club_name
+            data_type: varchar
+          - name: league_name
+            data_type: varchar
+          - name: league_level
+            data_type: number
+          - name: nationality_id
+            data_type: number
+          - name: nationality_name
+            data_type: varchar
+          - name: preferred_foot
+            data_type: varchar
+          - name: weak_foot
+            data_type: number
+          - name: skill_moves
+            data_type: number
+          - name: work_rate
+            data_type: varchar
+          - name: pace
+            data_type: number
+          - name: shooting
+            data_type: number
+          - name: passing
+            data_type: number
+          - name: dribbling
+            data_type: number
+          - name: defending
+            data_type: number
+          - name: physic
+            data_type: number
+
+      - name: team
+        columns:
+          - name: id
+            data_type: number
+          - name: team_api_id
+            data_type: number
+          - name: team_fifa_api_id
+            data_type: number
+          - name: team_long_name
+            data_type: varchar
+          - name: team_short_name
+            data_type: varchar
+
+      - name: team_attributes
+        columns:
+          - name: id
+            data_type: number
+          - name: team_fifa_api_id
+            data_type: number
+          - name: team_api_id
+            data_type: number
+          - name: date
+            data_type: timestamp_ntz
+          - name: buildupplayspeed
+            data_type: number
+          - name: buildupplayspeedclass
+            data_type: varchar
+          - name: buildupplaydribbling
+            data_type: number
+          - name: buildupplaydribblingclass
+            data_type: varchar
+          - name: buildupplaypassing
+            data_type: number
+          - name: buildupplaypassingclass
+            data_type: varchar
+          - name: buildupplaypositioningclass
+            data_type: varchar
+          - name: chancecreationpassing
+            data_type: number
+          - name: chancecreationpassingclass
+            data_type: varchar
+          - name: chancecreationcrossing
+            data_type: number
+          - name: chancecreationcrossingclass
+            data_type: varchar
+          - name: chancecreationshooting
+            data_type: number
+          - name: chancecreationshootingc … [truncated 724 chars]
