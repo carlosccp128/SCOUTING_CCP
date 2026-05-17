@@ -56,3 +56,21 @@ models:
       +schema: CORE
       
       #dentro de marts irian: /empresa1 y /empresa2 (ó equipo1 y equipo2) 
+
+
+#===================================================================
+# SEEDS
+#===================================================================
+seeds:
+  +schema: seed_data
+  +database: "{{ env_var('DBT_ENVIRONMENTS','FAIL') }}_BRONZE_SCOUTING"
+
+
+#===================================================================
+# SNAPSHOTS
+#===================================================================
+snapshots:
+  +transient: false
+  +target_database: "{{ env_var('DBT_ENVIRONMENTS','FAIL') }}_SILVER_SCOUTING"
+  +target_schema: snapshots
+

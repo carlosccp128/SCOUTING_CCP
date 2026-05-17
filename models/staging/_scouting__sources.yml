@@ -1,5 +1,5 @@
 # _scouting__sources.yml - Source del modelo de scouting
-
+#=========================================================
 version: 2
 
 sources:
@@ -7,7 +7,7 @@ sources:
     description: >
       Datos crudos de las fuentes de origen, que nos pasa nuestro cliente,
       con los que quieren que desarrollemos nuestros modelos.
-    
+
     schema: raw
     database: "{{ env_var('DBT_ENVIRONMENTS','FAIL') }}_BRONZE_SCOUTING"
 
@@ -16,15 +16,13 @@ sources:
       schema: false
       identifier: false
 
-
     tables:
-
       #------------------------------------------------------------
-      # country - Países ligas observadas
+      # country - Países de ligas observadas
       #------------------------------------------------------------
       - name: country
         description: Países en los que se realiza seguimiento a jugadores.
-        
+
         columns:
           - name: id
             description: >
@@ -46,13 +44,12 @@ sources:
                     field: nationality_name
                     to: source('scouting','player_f15_annual')
 
-
       #------------------------------------------------------------
       # league - Ligas de seguimiento
       #------------------------------------------------------------
       - name: league
         description: Ligas de seguimiento.
-        
+
         columns:
           - name: id
             description: >
@@ -62,7 +59,7 @@ sources:
             data_tests:
               - unique
               - not_null
-          
+
           - name: country_id
             description: >
               ID del pais y de liga, coincide con id  de esta tabla y con id_pais de la tabla country.
@@ -75,7 +72,7 @@ sources:
                   arguments:
                     field: id
                     to: source('scouting','country')
-              
+
           - name: name
             description: Nombre de la liga.
             data_type: varchar
@@ -86,14 +83,13 @@ sources:
                   arguments:
                     field: league_name
                     to: source('scouting','player_f15_annual')
-              
 
       #------------------------------------------------------------
       # team - Equipos de ligas que se siguen
       #------------------------------------------------------------
       - name: team
         description: Equipos de ligas que siguen.
-        
+
         columns:
           - name: id
             description: ID desconocido, será eliminado.
@@ -113,20 +109,19 @@ sources:
                   arguments:
                     field: club_team_id
                     to: source('scouting','player_f15_annual')
-              
+
           - name: team_long_name
             description: Nombre del equipo.
             data_type: varchar
             data_tests:
               - unique
               - not_null
-              
+
           - name: team_short_name
             description: Acrónimo de tres letras para el nombre del equipo.
             data_type: varchar
             data_tests:
-            - not_null
-
+              - not_null
 
       #------------------------------------------------------------
       # player - Lista de jugadores observados
@@ -188,7 +183,6 @@ sources:
             data_tests:
               - not_null
 
-
       #------------------------------------------------------------
       # player_f15_anual - Tabla anual de todos los jugadores
       #------------------------------------------------------------
@@ -204,13 +198,13 @@ sources:
             data_tests:
               - unique
               - not_null
-            
+
           - name: short_name
             description: Nombre corto (Primera letra del nombre y el apellido).
             data_type: varchar
             data_tests:
               - not_null
-            
+
           - name: long_name
             description: Nombre largo.
             data_type: varchar
@@ -228,17 +222,17 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
-                  arguments:  
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
                     min_value: 1
                     max_value: 99
-              
+
           - name: potential
             description: Potencial.
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -247,7 +241,7 @@ sources:
             description: Valor en euros.
             data_type: number
             data_tests:
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 0
 
@@ -255,7 +249,7 @@ sources:
             description: Salario semanal en euros.
             data_type: number
             data_tests:
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 0
 
@@ -264,35 +258,35 @@ sources:
             data_type: date
             data_tests:
               - not_null
-              
+
           - name: height_cm
             description: Altura en centímetros.
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 140
                     max_value: 220
-                
+
           - name: weight_kg
             description: Peso en kilogramos.
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 45
                     max_value: 120
-                
+
           - name: club_team_id
             description: ID de equipo al que pertenece el jugador.
             data_type: number
-              
+
           - name: club_name
             description: Nombre del club.
             data_type: varchar
-            
+
           - name: league_name
             description: Nombre de liga.
             data_type: varchar
@@ -306,13 +300,13 @@ sources:
             data_type: number
             data_tests:
               - not_null
-            
+
           - name: nationality_name
             description: Nombre del país en inglés.
             data_type: varchar
             data_tests:
               - not_null
-              
+
           - name: preferred_foot
             description: Pie hábil
             data_type: varchar
@@ -320,15 +314,14 @@ sources:
               - not_null
               - accepted_values:
                   arguments:
-                    values:
-                      ['Left','Right']
+                    values: ["Left", "Right"]
 
           - name: weak_foot
             description: Habilidad de la pierna mala.
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 5
@@ -338,7 +331,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 5
@@ -348,13 +341,13 @@ sources:
             data_type: varchar
             data_tests:
               - not_null
-            
+
           - name: pace
             description: Ritmo.
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -364,18 +357,18 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
-              
+
           - name: passing
             description: Pase.
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
-                  arguments: 
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
                     min_value: 1
                     max_value: 99
 
@@ -384,7 +377,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -394,7 +387,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -404,25 +397,24 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
-
 
       #------------------------------------------------------------
       # player_attributes - Atributos de los jugadores
       #------------------------------------------------------------
       - name: player_attributes
         description: Atributos de los jugadores. Aquí nos actualizan los informes de los jugadores.
-      
+
         config: #Aunque salga subrayado como error, corre el source freshness.
-                #Aparece porque van actualizando las versiones y la nomenclatura de dbt.
+          #Aparece porque van actualizando las versiones y la nomenclatura de dbt.
           loaded_at_field: date
           freshness:
-            warn_after:  {count: 24, period: hour}
+            warn_after: { count: 24, period: hour }
             #error_after: {count: 48, period: hour}
-        
+
         columns:
           - name: id
             description: >
@@ -443,7 +435,7 @@ sources:
                   arguments:
                     field: player_fifa_api_id
                     to: source('scouting','player')
-              
+
           - name: player_api_id
             description: ID generado por la api de descarga. Será eliminado.
             data_type: number
@@ -459,17 +451,17 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
-            
+
           - name: potential
             description: Potencial.
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -481,9 +473,8 @@ sources:
               - not_null
               - accepted_values:
                   arguments:
-                    values:
-                      ['Left','Right']
-            
+                    values: ["Left", "Right"]
+
           - name: attacking_work_rate
             description: Trabajo ofensivo.
             data_type: varchar
@@ -491,8 +482,7 @@ sources:
               - not_null
               - accepted_values:
                   arguments:
-                    values: 
-                      ['High','Medium','Low']
+                    values: ["High", "Medium", "Low"]
 
           - name: defensive_work_rate
             description: Trabajo defensivo.
@@ -501,8 +491,7 @@ sources:
               - not_null
               - accepted_values:
                   arguments:
-                    values: 
-                      ['High','Medium','Low']
+                    values: ["High", "Medium", "Low"]
 
           # ========== Atributos Ofensivos ====================================
 
@@ -511,7 +500,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -521,7 +510,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -531,7 +520,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -541,7 +530,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -551,11 +540,11 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
-          
+
           # ========== Atributos Técnicos ====================================
 
           - name: dribbling
@@ -563,7 +552,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -573,7 +562,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -583,7 +572,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -593,7 +582,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -603,7 +592,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -615,7 +604,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -625,7 +614,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -635,7 +624,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -645,7 +634,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -655,19 +644,19 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
 
           # ========== Atributos de Potencia  ====================================
-            
+
           - name: shot_power
             description: Potencia de tiro.
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -677,7 +666,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -687,7 +676,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -697,7 +686,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -707,7 +696,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -719,7 +708,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -729,7 +718,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -739,7 +728,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -749,7 +738,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -759,11 +748,11 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
-          
+
           # ========== Atributos de Defensa ====================================
 
           - name: marking
@@ -771,7 +760,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -781,7 +770,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -791,7 +780,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -803,7 +792,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -813,7 +802,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -823,7 +812,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -833,7 +822,7 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
@@ -843,11 +832,10 @@ sources:
             data_type: number
             data_tests:
               - not_null
-              - dbt_expectations.expect_column_values_to_be_between: 
+              - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
                     max_value: 99
-
 
       #------------------------------------------------------------
       # team:attributes - Características de juego de los equipos.
@@ -855,21 +843,21 @@ sources:
       # Falta poner el accepted values a las columnas class.
       - name: team_attributes
         description: Características de juego de los equipos.
-        
+
         columns:
           - name: id
             description: >
               Contador de registros,va en orden creciente y pueden no estar todos.
               Será eliminado.
             data_type: number
-            data_tests: 
+            data_tests:
               - unique
               - not_null
 
           - name: team_fifa_api_id
             description: ID del equipo.
             data_type: number
-            data_tests: 
+            data_tests:
               - not_null
               - relationships:
                   arguments:
@@ -885,15 +873,15 @@ sources:
             data_type: timestamp_ntz
             data_tests:
               - not_null
-              
+
           - name: buildupplayspeed
             description: Velocidad de juego.
             data_type: number
             data_tests:
-            - dbt_expectations.expect_column_values_to_be_between: 
-                arguments:
-                  min_value: 1
-                  max_value: 99
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
 
           - name: buildupplayspeedclass
             description: Tipo velocidad de juego.
@@ -904,23 +892,23 @@ sources:
             description: Regates.
             data_type: number
             data_tests:
-            - dbt_expectations.expect_column_values_to_be_between: 
-                arguments:
-                  min_value: 1
-                  max_value: 99
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
 
           - name: buildupplaydribblingclass
             description: Tipo cantidad regates.
             data_type: varchar
 
-          - name: buildupplaypassing 
+          - name: buildupplaypassing
             description: Distancia de pases.
             data_type: number
             data_tests:
-            - dbt_expectations.expect_column_values_to_be_between: 
-                arguments:
-                  min_value: 1
-                  max_value: 99
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
 
           - name: buildupplaypassingclass
             description: Tipo de distancia de pases.
@@ -934,10 +922,10 @@ sources:
             description: Riesgo de pases.
             data_type: number
             data_tests:
-            - dbt_expectations.expect_column_values_to_be_between: 
-                arguments:
-                  min_value: 1
-                  max_value: 99
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
 
           - name: chancecreationpassingclass
             description: Tipo riesgo de pases.
@@ -947,10 +935,10 @@ sources:
             description: Centros.
             data_type: number
             data_tests:
-            - dbt_expectations.expect_column_values_to_be_between: 
-                arguments:
-                  min_value: 1
-                  max_value: 99
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
 
           - name: chancecreationcrossingclass
             description: Tipo cantidad de centros.
@@ -960,10 +948,10 @@ sources:
             description: Tiros.
             data_type: number
             data_tests:
-            - dbt_expectations.expect_column_values_to_be_between: 
-                arguments:
-                  min_value: 1
-                  max_value: 99
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
 
           - name: chancecreationshootingclass
             description: Tipo cantidad de tiros.
@@ -977,10 +965,10 @@ sources:
             description: Presión.
             data_type: number
             data_tests:
-            - dbt_expectations.expect_column_values_to_be_between: 
-                arguments:
-                  min_value: 1
-                  max_value: 99
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
 
           - name: defencepressureclass
             description: Tipo presión.
@@ -990,10 +978,10 @@ sources:
             description: Agresividad.
             data_type: number
             data_tests:
-            - dbt_expectations.expect_column_values_to_be_between: 
-                arguments:
-                  min_value: 1
-                  max_value: 99
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
 
           - name: defenceaggressionclass
             description: Tipo agresividad.
@@ -1003,10 +991,10 @@ sources:
             description: Anchura del equipo.
             data_type: number
             data_tests:
-            - dbt_expectations.expect_column_values_to_be_between: 
-                arguments:
-                  min_value: 1
-                  max_value: 99
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
 
           - name: defenceteamwidthclass
             description: Tipo anchura del equipo.

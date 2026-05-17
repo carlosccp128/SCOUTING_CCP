@@ -1,0 +1,68 @@
+pais_id, pais_eng              , pais_esp            , iso_3
+      1, Albania               , Albania             , ALB
+      3, Armenia               , Armenia             , ARM
+      4, Austria               , Austria             , AUT
+      5, Azerbaijan            , Azerbaiyán          , AZE
+      6, Belarus               , Bielorrusia         , BLR
+      7, Belgium               , Bélgica             , BEL
+      8, Bosnia and Herzegovina, Bosnia y Herzegovina, BIH
+      9, Bulgaria              , Bulgaria            , BGR
+     10, Croatia               , Croacia             , HRV
+     11, Cyprus                , Chipre              , CYP
+     12, Czech Republic        , Chequia             , CZE
+     13, Denmark               , Dinamarca           , DNK
+     14, England               , Inglaterra          , ENG
+     15, Montenegro            , Montenegro          , MNE
+     16, Faroe Islands         , Islas Feroe         , FRO
+     17, Finland               , Finlandia           , FIN
+     18, France                , Francia             , FRA
+     19, North Macedonia       , Macedonia del Norte , MKD
+     20, Georgia               , Georgia             , GEO
+     21, Germany               , Alemania            , DEU
+     22, Greece                , Grecia              , GRC
+     23, Hungary               , Hungría             , HUN
+     24, Iceland               , Islandia            , ISL
+     25, Republic of Ireland   , Irlanda             , IRL
+     26, Israel                , Israel              , ISR
+     27, Italy                 , Italia              , ITA
+     28, Latvia                , Letonia             , LVA
+     29, Liechtenstein         , Liechtenstein       , LIE
+     30, Lithuania             , Lituania            , LTU
+     31, Luxembourg            , Luxemburgo          , LUX
+     32, Malta                 , Malta               , MLT
+     33, Moldova               , Moldavia            , MDA
+     34, Netherlands           , Países Bajos        , NLD
+     35, Northern Ireland      , Irlanda del Norte   , NIR
+     36, Norway                , Noruega             , NOR
+     37, Poland                , Polonia             , POL
+     38, Portugal              , Portugal            , PRT
+     39, Romania               , Rumanía             , ROU
+     40, Russia                , Rusia               , RUS
+     42, Scotland              , Escocia             , SCT
+     43, Slovakia              , Eslovaquia          , SVK
+     44, Slovenia              , Eslovenia           , SVN
+     45, Spain                 , España              , ESP
+     46, Sweden                , Suecia              , SWE
+     47, Switzerland           , Suiza               , CHE
+     48, Turkey                , Turquía             , TUR
+     49, Ukraine               , Ucrania             , UKR
+     50, Wales                 , Gales               , WLS
+     51, Serbia                , Serbia              , SRB
+     52, Argentina             , Argentina           , ARG
+     53, Bolivia               , Bolivia             , BOL
+     54, Brazil                , Brasil              , BRA
+     55, Chile                 , Chile               , CHL
+     56, Colombia              , Colombia            , COL
+     57, Ecuador               , Ecuador             , ECU
+     58, Paraguay              , Paraguay            , PRY
+     59, Peru                  , Perú                , PER
+     60, Uruguay               , Uruguay             , URY
+     61, Venezuela             , Venezuela           , VEN
+     63, Antigua and Barbuda   , Antigua y Barbuda   , ATG
+     70, Canada                , Canadá              , CAN
+     72, Costa Rica            , Costa Rica          , CRI
+     83, Mexico                , México              , MEX
+     95, United States         , Estados Unidos      , USA
+    103, Cameroon              , Camerún             , CMR
+    108, Côte d'Ivoire         , Costa de Marfil     , CIV
+    111, Egypt                 , Egipto              , EGY
