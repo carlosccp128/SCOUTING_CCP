@@ -16,7 +16,7 @@ renamed as (
         trim(p.pais_esp) as nombre_pais
 
     from src_country as c
-    inner join seed_paises as p
+    left join seed_paises as p
         on trim(c.name) = trim(p.pais_eng)
 )
 
