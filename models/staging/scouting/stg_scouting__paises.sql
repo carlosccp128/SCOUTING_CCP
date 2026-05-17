@@ -13,7 +13,8 @@ renamed as (
 
     select
         c.id as id_pais_liga,
-        trim(p.pais_esp) as nombre_pais
+        trim(p.pais_esp) as nombre_pais,
+        p.iso_3 as iso_pais
 
     from src_country as c
     left join seed_paises as p
