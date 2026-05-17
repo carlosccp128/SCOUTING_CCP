@@ -109,8 +109,8 @@ renamed as (
         nationality_id as id_pais,
         nombre_pais,
         case
-            when trim(preferred_foot) = 'Left' then 'Izquierda'
-            when trim(preferred_foot) = 'Right' then 'Derecha'
+            when lower(trim(preferred_foot)) = 'left' then 'Izquierda'
+            when lower(trim(preferred_foot)) = 'right' then 'Derecha'
         end as pierna_habil,
         weak_foot as pierna_mala,
         skill_moves as filigranas,

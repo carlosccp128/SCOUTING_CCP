@@ -16,8 +16,8 @@ renamed as (
         overall_rating as valoracion_general,
         potential as potencial,
         case
-            when trim(preferred_foot) = 'Left' then 'Izquierda'
-            when trim(preferred_foot) = 'Right' then 'Derecha'
+            when lower(trim(preferred_foot)) = 'left' then 'Izquierda'
+            when lower(trim(preferred_foot)) = 'right' then 'Derecha'
         end as pierna_habil,
         defensive_work_rate as trabajo_defensivo,
         attacking_work_rate as trabajo_ofensivo,
