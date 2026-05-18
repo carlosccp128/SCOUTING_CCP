@@ -25,5 +25,5 @@ select
     l.filigranas,
 
 from stg_jugador as j
-left join stg_list as l
+inner join stg_list as l
     on j.id_jugador = l.id_jugador
