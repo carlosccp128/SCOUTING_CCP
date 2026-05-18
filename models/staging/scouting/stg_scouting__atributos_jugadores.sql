@@ -58,8 +58,11 @@ renamed as (
     from src_player_attributes as att
     inner join jugadores as j
     on att.player_fifa_api_id = j.id_jugador
+    where overall_rating is not null
+
     --eliminamos los registros 'malos', que no tienen jugador
-    -- en la tabla jugadores (los jugadores a observar)
+    -- en la tabla jugadores (los jugadores a observar).
+    -- Y los que son nulos, que son registros que no sirven.
 )
 
 select * from renamed
