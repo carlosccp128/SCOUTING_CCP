@@ -217,7 +217,7 @@ models:
         description: fisico
 
   #------------------------------------------------------------
-  # stg_scouting__
+  # stg_scouting__atributos_jugadores
   #------------------------------------------------------------
   - name: stg_scouting__atributos_jugadores
     description: >
