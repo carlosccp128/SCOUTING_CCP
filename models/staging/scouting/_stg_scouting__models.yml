@@ -79,7 +79,8 @@ models:
       - name: id_equipo
         data_type: number
         description: id_equipo
-        data_tests: 
+        data_tests:
+          - not_null
           - relationships:
               arguments:
                 field: id_equipo
@@ -243,7 +244,7 @@ models:
               - not_null
               - accepted_values:
                   arguments:
-                    values: ["Izquierda", "Derecha"]
+                    values: ["Izquierda", "Derecha","Desconocida"]
 
       - name: pierna_mala
         data_type: number
@@ -260,7 +261,7 @@ models:
               - not_null
               - accepted_values:
                   arguments:
-                    values: ["Bajo", "Medio","Alto"]
+                    values: ["Bajo", "Medio","Alto","Desconocido"]
 
       - name: trabajo_ofensivo
         data_type: varchar
@@ -269,7 +270,7 @@ models:
               - not_null
               - accepted_values:
                   arguments:
-                    values: ["Bajo", "Medio","Alto"]
+                    values: ["Bajo", "Medio","Alto","Desconocido"]
 
       - name: ritmo
         data_type: number
@@ -332,10 +333,14 @@ models:
       - name: valoracion_general
         data_type: number
         description: valoracion_general
+        data_tests:
+              - not_null
 
       - name: potencial
         data_type: number
         description: potencial
+        data_tests:
+              - not_null
 
       - name: pierna_habil
         data_type: varchar
@@ -344,7 +349,7 @@ models:
               - not_null
               - accepted_values:
                   arguments:
-                    values: ["Izquierda", "Derecha"]
+                    values: ["Izquierda", "Derecha","Desconocida"]
 
       - name: trabajo_defensivo
         data_type: varchar
@@ -353,7 +358,7 @@ models:
               - not_null
               - accepted_values:
                   arguments:
-                    values: ["Bajo", "Medio", "Alto"]
+                    values: ["Bajo", "Medio", "Alto", "Desconocido"]
 
       - name: trabajo_ofensivo
         data_type: varchar
@@ -362,150 +367,216 @@ models:
               - not_null
               - accepted_values:
                   arguments:
-                    values: ["Bajo", "Medio", "Alto"]
+                    values: ["Bajo", "Medio", "Alto","Desconocido"]
 
       # ========== Atributos Ofensivos ====================================
 
       - name: centros
         data_type: number
         description: centros
+        data_tests:
+              - not_null
 
       - name: definicion
         data_type: number
         description: definicion
+        data_tests:
+              - not_null
 
       - name: precision_cabeza
         data_type: number
         description: precision_cabeza
+        data_tests:
+              - not_null
 
       - name: pases_cortos
         data_type: number
         description: pases_cortos
+        data_tests:
+              - not_null
 
       - name: voleas
         data_type: number
         description: voleas
+        data_tests:
+              - not_null
 
       # ========== Atributos Técnicos ====================================
 
       - name: regates
         data_type: number
         description: regates
+        data_tests:
+              - not_null
 
       - name: efecto
         data_type: number
         description: efecto
+        data_tests:
+              - not_null
 
       - name: precision_faltas
         data_type: number
         description: precision_faltas
+        data_tests:
+              - not_null
 
       - name: pases_largos
         data_type: number
         description: pases_largos
+        data_tests:
+              - not_null
 
       - name: control_balon
         data_type: number
         description: control_balon
+        data_tests:
+              - not_null
       
       # ========== Atributos de Movimiento ====================================
 
       - name: aceleracion
         data_type: number
         description: aceleracion
+        data_tests:
+              - not_null
 
       - name: velocidad
         data_type: number
         description: velocidad
+        data_tests:
+              - not_null
 
       - name: agilidad
         data_type: number
         description: agilidad
+        data_tests:
+              - not_null
 
       - name: reflejos
         data_type: number
         description: reflejos
+        data_tests:
+              - not_null
 
       - name: equilibrio
         data_type: number
         description: equilibrio
+        data_tests:
+              - not_null
 
       # ========== Atributos de Potencia  ====================================
 
       - name: potencia_tiro
         data_type: number
         description: potencia_tiro
+        data_tests:
+              - not_null
 
       - name: salto
         data_type: number
         description: salto
+        data_tests:
+              - not_null
 
       - name: resistencia
         data_type: number
         description: resistencia
+        data_tests:
+              - not_null
 
       - name: fuerza
         data_type: number
         description: fuerza
+        data_tests:
+              - not_null
 
       - name: tiros_lejanos
         data_type: number
         description: tiros_lejanos
+        data_tests:
+              - not_null
 
       # ========== Atributos de Mentalidad ====================================
 
       - name: agresividad
         data_type: number
         description: agresividad
+        data_tests:
+              - not_null
 
       - name: intercepciones
         data_type: number
         description: intercepciones
+        data_tests:
+              - not_null
 
       - name: posicion_ataque
         data_type: number
         description: posicion_ataque
+        data_tests:
+              - not_null
 
       - name: vision
         data_type: number
         description: vision
+        data_tests:
+              - not_null
 
       - name: penaltis
         data_type: number
         description: penaltis
+        data_tests:
+              - not_null
 
       # ========== Atributos de Defensa ====================================
 
       - name: marcaje
         data_type: number
         description: marcaje
+        data_tests:
+              - not_null
 
       - name: robos
         data_type: number
         description: robos
+        data_tests:
+              - not_null
 
       - name: entrada_agresiva
         data_type: number
         description: entrada_agresiva
+        data_tests:
+              - not_null
 
       # ========== Atributos de Portero ====================================
 
       - name: estirada
         data_type: number
         description: estirada
+        data_tests:
+              - not_null
 
       - name: paradas
         data_type: number
         description: paradas
+        data_tests:
+              - not_null
 
       - name: saques
         data_type: number
         description: saques
+        data_tests:
+              - not_null
 
       - name: colocacion
         data_type: number
         description: colocacion
+        data_tests:
+              - not_null
 
       - name: reflejos_portero
         data_type: number
         description: reflejos_portero
+        data_tests:
+              - not_null

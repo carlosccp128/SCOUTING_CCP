@@ -18,16 +18,19 @@ renamed as (
         case
             when lower(trim(preferred_foot)) = 'left' then 'Izquierda'
             when lower(trim(preferred_foot)) = 'right' then 'Derecha'
+            else 'Desconocida'
         end as pierna_habil,
         case
             when lower(trim(defensive_work_rate)) = 'low' then 'Bajo'
             when lower(trim(defensive_work_rate)) = 'medium' then 'Medio'
             when lower(trim(defensive_work_rate)) = 'high' then 'Alto'
+            else 'Desconocido'
         end as trabajo_defensivo,
         case
             when lower(trim(attacking_work_rate)) = 'low' then 'Bajo'
             when lower(trim(attacking_work_rate)) = 'medium' then 'Medio'
             when lower(trim(attacking_work_rate)) = 'high' then 'Alto'
+            else 'Desconocido'
         end as trabajo_ofensivo,
         crossing as centros,
         finishing as definicion,
@@ -67,10 +70,13 @@ renamed as (
     inner join jugadores as j
     on att.player_fifa_api_id = j.id_jugador
     where overall_rating is not null
+        and fecha_actualizacion > '2010-08-12'
+
 
     --eliminamos los registros 'malos', que no tienen jugador
     -- en la tabla jugadores (los jugadores a observar).
-    -- Y los que son nulos, que son registros que no sirven.
+    -- Y los que son nulos, que son registros que no sirven con el overall,
+    --Además filtramos por fecha porque se recogian menos estadísticas
 )
 
 select * from renamed

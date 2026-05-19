@@ -111,6 +111,7 @@ renamed as (
         case
             when lower(trim(preferred_foot)) = 'left' then 'Izquierda'
             when lower(trim(preferred_foot)) = 'right' then 'Derecha'
+            else 'Desconocida'
         end as pierna_habil,
         weak_foot as pierna_mala,
         skill_moves as filigranas,
@@ -118,11 +119,13 @@ renamed as (
             when lower(strtok(work_rate,'/', 2)) = 'low' then 'Bajo'
             when lower(strtok(work_rate,'/', 2)) = 'medium' then 'Medio'
             when lower(strtok(work_rate,'/', 2)) = 'high' then 'Alto'
+            else 'Desconocido'
         end as trabajo_defensivo,
         case
             when lower(strtok(work_rate,'/', 1)) = 'low' then 'Bajo'
             when lower(strtok(work_rate,'/', 1)) = 'medium' then 'Medio'
             when lower(strtok(work_rate,'/', 1)) = 'high' then 'Alto'
+            else 'Desconocido'
         end as trabajo_ofensivo,
         coalesce(pace,1) as ritmo,
         coalesce(shooting,1) as tiro,
