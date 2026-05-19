@@ -14,7 +14,7 @@ models:
       - name: id_pais
         data_type: number
         description: id_pais
-        data_test: 
+        data_tests: 
           - unique
           - not_null
 
@@ -36,7 +36,7 @@ models:
       - name: id_liga
         data_type: varchar
         description: id_liga
-        data_test: 
+        data_tests: 
           - unique
           - not_null
 
@@ -68,7 +68,7 @@ models:
       - name: id_equipo
         data_type: number
         description: id_equipo
-        data_test: 
+        data_tests: 
           - unique
           - not_null
 
@@ -94,7 +94,7 @@ models:
       - name: posicion_id
         data_type: number
         description: posicion_id
-        data_test: 
+        data_tests: 
           - unique
           - not_null
 
@@ -116,7 +116,7 @@ models:
       - name: id_jugador
         data_type: number
         description: id_jugador
-        data_test: 
+        data_tests: 
           - unique
           - not_null
 
