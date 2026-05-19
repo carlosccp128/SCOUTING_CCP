@@ -177,11 +177,11 @@ models:
       description: potencial
 
   #------------------------------------------------------------
-  # fct_atributos
+  # fct_atributos_actualizados
   #------------------------------------------------------------
-- name: fct_atributos
+- name: fct_atributos_actualizados
   description: >
-    Tabla de hechos de los atributos de los jugadores.
+    Tabla de hechos de los atributos de los jugadores. Es incremental.
     Tabla sobre la que sacar métricas de los jugadores.
   columns:
     - name: posicion_id
@@ -203,6 +203,9 @@ models:
     - name: id_jugador
       data_type: number
       description: id_jugador
+      data_tests:
+        - unique
+        - not_null
 
     - name: fecha_actualizacion
       data_type: timestamp_ntz

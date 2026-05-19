@@ -1,4 +1,4 @@
--- fct_atributos.sql
+-- fct_atributos_actualizados.sql
 --==================
 
 {{
