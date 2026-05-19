@@ -9,10 +9,14 @@ models:
   #------------------------------------------------------------
   - name: int_scouting__paises
     description: Todos los paises de jugadores o de ligas.
+    
     columns:
       - name: id_pais
         data_type: number
         description: id_pais
+        data_test: 
+          - unique
+          - not_null
 
       - name: nombre_pais
         data_type: varchar
@@ -27,10 +31,14 @@ models:
   #------------------------------------------------------------
   - name: int_scouting__ligas
     description: Ligas de analisis.
+    
     columns:
       - name: id_liga
         data_type: varchar
         description: id_liga
+        data_test: 
+          - unique
+          - not_null
 
       - name: nombre_liga
         data_type: varchar
@@ -43,16 +51,26 @@ models:
       - name: id_pais
         data_type: number
         description: id_pais
+        data_tests:
+          - not_null
+          - relationships:
+                  arguments:
+                    field: id_pais
+                    to: ref('int_scouting__paises')
 
   #------------------------------------------------------------
   # int_scouting__equipos
   #------------------------------------------------------------
   - name: int_scouting__equipos
     description: Equipos de analisis
+    
     columns:
       - name: id_equipo
         data_type: number
         description: id_equipo
+        data_test: 
+          - unique
+          - not_null
 
       - name: nombre_equipo
         data_type: varchar
@@ -71,10 +89,14 @@ models:
   #------------------------------------------------------------
   - name: int_scouting__posiciones
     description: Posiciones de los jugadores.
+    
     columns:
       - name: posicion_id
         data_type: number
         description: posicion_id
+        data_test: 
+          - unique
+          - not_null
 
       - name: posicion
         data_type: varchar
@@ -89,10 +111,14 @@ models:
   #------------------------------------------------------------
   - name: int_scouting__jugadores
     description: Jugadores analizados.
+    
     columns:
       - name: id_jugador
         data_type: number
         description: id_jugador
+        data_test: 
+          - unique
+          - not_null
 
       - name: nombre_jugador
         data_type: varchar
@@ -113,6 +139,12 @@ models:
       - name: posicion_id
         data_type: number
         description: posicion_id
+        data_tests:
+          - not_null
+          - relationships:
+                  arguments:
+                    field: posicion_id
+                    to: ref('int_scouting__posiciones')
 
       - name: valor_mercado
         data_type: number
@@ -125,14 +157,32 @@ models:
       - name: id_equipo
         data_type: number
         description: id_equipo
+        data_tests:
+          - not_null
+          - relationships:
+                  arguments:
+                    field: id_equipo
+                    to: ref('int_scouting__equipos')
 
       - name: id_liga
         data_type: varchar
         description: id_liga
+        data_tests:
+          - not_null
+          - relationships:
+                  arguments:
+                    field: id_liga
+                    to: ref('int_scouting__ligas')
 
       - name: id_pais
         data_type: number
         description: id_pais
+        data_tests:
+          - not_null
+          - relationships:
+                  arguments:
+                    field: id_pais
+                    to: ref('int_scouting__paises')
 
       - name: pierna_habil
         data_type: varchar
@@ -155,6 +205,12 @@ models:
       - name: id_jugador
         data_type: number
         description: id_jugador
+        data_tests:
+          - not_null
+          - relationships:
+                  arguments:
+                    field: id_jugador
+                    to: ref('int_scouting__jugadores')
 
       - name: fecha_actualizacion
         data_type: timestamp_ntz
