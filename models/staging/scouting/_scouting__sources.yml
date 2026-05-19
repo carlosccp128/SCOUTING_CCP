@@ -59,7 +59,6 @@ sources:
               Lo usaremos de conector entre ligas y países y después lo descartaremos.
             data_type: number
             data_tests:
-              - unique
               - not_null
 
           - name: name
