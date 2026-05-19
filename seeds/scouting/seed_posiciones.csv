@@ -1,0 +1,17 @@
+posicion_id,posicion_esp,acronimo_esp,acronimo_eng,posicion_eng
+0,Desconocida, N/A,N/A,Unknown
+1,Portero,POR,GK,Goalkeeper
+2,Defensa Central,DFC,CB,Center Back
+3,Lateral Derecho,LD,RB,Right Back
+4,Lateral Izquierdo,LI,LB,Left Back
+13,Carrilero Derecho,CAD,RWB,Right Wing Back
+12,Carrilero Izquierdo,CAI,LWB,Left Wing Back
+5,Mediocentro Defensivo,MCD,CDM,Central Defensive Midfielder
+6,Mediocentro,MC,CM,Central Midfielder
+10,Mediapunta,MCO,CAM,Central Attacking Midfielder
+8,Volante Derecho,MD,RM,Right Midfielder
+14,Volante Izquierdo,MI,LM,Left Midfielder
+11,Extremo Derecho,ED,RW,Right Winger
+7,Extremo Izquierdo,EI,LW,Left Winger
+15,Segundo Delantero,SD,CF,Center Forward
+9,Delantero Centro,DC,ST,Striker

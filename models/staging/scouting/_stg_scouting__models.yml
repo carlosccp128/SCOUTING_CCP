@@ -1,0 +1,511 @@
+# _stg_scouting__models.yml
+#=========================================================
+
+version: 2
+
+models:
+  #------------------------------------------------------------
+  # stg_scouting__paises
+  #------------------------------------------------------------
+  - name: stg_scouting__paises
+    description: Vista de la tabla con los paises a los que pertenecen las ligas que se siguen.
+    
+    columns:
+      - name: id_pais_liga
+        data_type: number
+        description: id_pais_liga
+        #sin tests porque hechos en origen
+          
+
+      - name: nombre_pais
+        data_type: varchar
+        description: nombre_pais
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+                  arguments:
+                    field: nombre_pais
+                    to: ref('stg_scouting__listado_jugadores')
+
+      - name: iso_pais
+        data_type: varchar
+        description: iso_pais
+        data_tests:
+          - unique
+          - not_null
+
+  #------------------------------------------------------------
+  # stg_scouting__ligas
+  #------------------------------------------------------------
+  - name: stg_scouting__ligas
+    description: Vista de la tabla de ligas en las que se siguen sus jugadores.
+    
+    columns:
+      - name: id_liga
+        data_type: varchar
+        description: id_liga
+        data_tests:
+          - unique
+          - not_null
+
+      - name: id_pais_liga
+        data_type: number
+        description: id_pais_liga
+        data_tests:
+          - relationships:
+                  arguments:
+                    field: id_pais_liga
+                    to: ref('stg_scouting__paises')
+
+      - name: nombre_liga
+        data_type: varchar
+        description: nombre_liga
+        data_tests:
+              - relationships:
+                  arguments:
+                    field: nombre_liga
+                    to: ref('stg_scouting__listado_jugadores')
+              #por nombre porque es lo que realmente tiene que coincidir
+              #ya que la id la hemos generado en ambas tablas en base al mismo nombre
+
+  #------------------------------------------------------------
+  # stg_scouting__equipos
+  #------------------------------------------------------------
+  - name: stg_scouting__equipos
+    description: Vista de la tabla de equipos que se observan.
+    
+    columns:
+      - name: id_equipo
+        data_type: number
+        description: id_equipo
+        data_tests: 
+          - relationships:
+              arguments:
+                field: id_equipo
+                to: ref('stg_scouting__listado_jugadores')
+
+      - name: nombre_equipo
+        data_type: varchar
+        description: nombre_equipo
+        
+
+      - name: acronimo_equipo
+        data_type: varchar
+        description: acronimo_equipo
+
+  #------------------------------------------------------------
+  # stg_scouting__jugadores
+  #------------------------------------------------------------
+  - name: stg_scouting__jugadores
+    description: Vista de la tabla de jugadores que se observan
+    
+    columns:
+      - name: nombre_jugador
+        data_type: varchar
+        description: nombre_jugador
+
+      - name: id_jugador
+        data_type: number
+        description: id_jugador
+        data_tests:
+              - relationships:
+                  arguments:
+                    field: id_jugador
+                    to: ref('stg_scouting__listado_jugadores')
+
+      - name: fecha_nacimiento
+        data_type: timestamp_ntz
+        description: fecha_nacimiento
+
+      - name: altura_cm
+        data_type: number
+        description: altura_cm
+
+      - name: peso_kg
+        data_type: number
+        description: peso_kg
+
+  #------------------------------------------------------------
+  # stg_scouting__listado_jugadores
+  #------------------------------------------------------------
+  - name: stg_scouting__listado_jugadores
+    description: >
+      Vista de la tabla listado de jugadores anual. Se actualiza una vez al año.
+      Incluye información importante sobre todos los jugadores, incluyendo equipos, ligas e incluso paises.
+    
+    columns:
+      - name: id_jugador
+        data_type: number
+        description: id_jugador
+
+
+      - name: nombre_jugador_corto
+        data_type: varchar
+        description: nombre_jugador_corto
+
+      - name: nombre_jugador_largo
+        data_type: varchar
+        description: nombre_jugador_largo
+
+      - name: posicion_id
+        data_type: number
+        description: posicion_id
+        data_tests:
+          - not_null
+
+      - name: posicion_nombre
+        data_type: varchar
+        description: posicion_nombre
+        data_tests:
+          - not_null
+
+      - name: posicion
+        data_type: varchar
+        description: posicion
+        data_tests:
+          - not_null
+
+      - name: valoracion_general
+        data_type: number
+        description: valoracion_general
+
+      - name: potencial
+        data_type: number
+        description: potencial
+
+      - name: valor_mercado
+        data_type: number
+        description: valor_mercado
+        data_tests:
+          - not_null
+
+      - name: salario_semanal
+        data_type: number
+        description: salario_semanal
+        data_tests:
+          - not_null
+
+      - name: fecha_nacimiento
+        data_type: date
+        description: fecha_nacimiento
+
+      - name: altura_cm
+        data_type: number
+        description: altura_cm
+
+      - name: peso_kg
+        data_type: number
+        description: peso_kg
+
+      - name: id_equipo
+        data_type: number
+        description: id_equipo
+        data_tests:
+          - not_null
+
+      - name: nombre_equipo
+        data_type: varchar
+        description: nombre_equipo
+        data_tests:
+          - not_null
+
+      - name: id_liga
+        data_type: varchar
+        description: id_liga
+        data_tests:
+          - not_null
+
+      - name: nombre_liga
+        data_type: varchar
+        description: nombre_liga
+        data_tests:
+          - not_null
+
+      - name: division_liga
+        data_type: number
+        description: division_liga
+        data_tests:
+          - not_null
+
+      - name: id_pais
+        data_type: number
+        description: id_pais
+
+      - name: nombre_pais
+        data_type: varchar
+        description: nombre_pais
+
+      - name: pierna_habil
+        data_type: varchar
+        description: pierna_habil
+        data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: ["Izquierda", "Derecha"]
+
+      - name: pierna_mala
+        data_type: number
+        description: pierna_mala
+
+      - name: filigranas
+        data_type: number
+        description: filigranas
+
+      - name: trabajo_defensivo
+        data_type: varchar
+        description: trabajo_defensivo
+        data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: ["Bajo", "Medio","Alto"]
+
+      - name: trabajo_ofensivo
+        data_type: varchar
+        description: trabajo_ofensivo
+        data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: ["Bajo", "Medio","Alto"]
+
+      - name: ritmo
+        data_type: number
+        description: ritmo
+        data_tests:
+              - not_null
+
+      - name: tiro
+        data_type: number
+        description: tiro
+        data_tests:
+              - not_null
+
+      - name: pase
+        data_type: number
+        description: pase
+        data_tests:
+              - not_null
+
+      - name: regates
+        data_type: number
+        description: regates
+        data_tests:
+              - not_null
+
+      - name: defensa
+        data_type: number
+        description: defensa
+        data_tests:
+              - not_null
+
+      - name: fisico
+        data_type: number
+        description: fisico
+        data_tests:
+              - not_null
+
+  #------------------------------------------------------------
+  # stg_scouting__atributos_jugadores
+  #------------------------------------------------------------
+  - name: stg_scouting__atributos_jugadores
+    description: >
+      Vista de la tabla de atributos de los jugadores.
+      Es la tabla a la que le van entrando datos nuevos.
+    
+    columns:
+      - name: id_jugador
+        data_type: number
+        description: id_jugador
+        data_tests:
+              - relationships:
+                  arguments:
+                    field: id_jugador
+                    to: ref('stg_scouting__jugadores')
+          
+      - name: fecha_actualizacion
+        data_type: timestamp_ntz
+        description: fecha_actualizacion
+
+      - name: valoracion_general
+        data_type: number
+        description: valoracion_general
+
+      - name: potencial
+        data_type: number
+        description: potencial
+
+      - name: pierna_habil
+        data_type: varchar
+        description: pierna_habil
+        data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: ["Izquierda", "Derecha"]
+
+      - name: trabajo_defensivo
+        data_type: varchar
+        description: trabajo_defensivo
+        data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: ["Bajo", "Medio", "Alto"]
+
+      - name: trabajo_ofensivo
+        data_type: varchar
+        description: trabajo_ofensivo
+        data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: ["Bajo", "Medio", "Alto"]
+
+      # ========== Atributos Ofensivos ====================================
+
+      - name: centros
+        data_type: number
+        description: centros
+
+      - name: definicion
+        data_type: number
+        description: definicion
+
+      - name: precision_cabeza
+        data_type: number
+        description: precision_cabeza
+
+      - name: pases_cortos
+        data_type: number
+        description: pases_cortos
+
+      - name: voleas
+        data_type: number
+        description: voleas
+
+      # ========== Atributos Técnicos ====================================
+
+      - name: regates
+        data_type: number
+        description: regates
+
+      - name: efecto
+        data_type: number
+        description: efecto
+
+      - name: precision_faltas
+        data_type: number
+        description: precision_faltas
+
+      - name: pases_largos
+        data_type: number
+        description: pases_largos
+
+      - name: control_balon
+        data_type: number
+        description: control_balon
+      
+      # ========== Atributos de Movimiento ====================================
+
+      - name: aceleracion
+        data_type: number
+        description: aceleracion
+
+      - name: velocidad
+        data_type: number
+        description: velocidad
+
+      - name: agilidad
+        data_type: number
+        description: agilidad
+
+      - name: reflejos
+        data_type: number
+        description: reflejos
+
+      - name: equilibrio
+        data_type: number
+        description: equilibrio
+
+      # ========== Atributos de Potencia  ====================================
+
+      - name: potencia_tiro
+        data_type: number
+        description: potencia_tiro
+
+      - name: salto
+        data_type: number
+        description: salto
+
+      - name: resistencia
+        data_type: number
+        description: resistencia
+
+      - name: fuerza
+        data_type: number
+        description: fuerza
+
+      - name: tiros_lejanos
+        data_type: number
+        description: tiros_lejanos
+
+      # ========== Atributos de Mentalidad ====================================
+
+      - name: agresividad
+        data_type: number
+        description: agresividad
+
+      - name: intercepciones
+        data_type: number
+        description: intercepciones
+
+      - name: posicion_ataque
+        data_type: number
+        description: posicion_ataque
+
+      - name: vision
+        data_type: number
+        description: vision
+
+      - name: penaltis
+        data_type: number
+        description: penaltis
+
+      # ========== Atributos de Defensa ====================================
+
+      - name: marcaje
+        data_type: number
+        description: marcaje
+
+      - name: robos
+        data_type: number
+        description: robos
+
+      - name: entrada_agresiva
+        data_type: number
+        description: entrada_agresiva
+
+      # ========== Atributos de Portero ====================================
+
+      - name: estirada
+        data_type: number
+        description: estirada
+
+      - name: paradas
+        data_type: number
+        description: paradas
+
+      - name: saques
+        data_type: number
+        description: saques
+
+      - name: colocacion
+        data_type: number
+        description: colocacion
+
+      - name: reflejos_portero
+        data_type: number
+        description: reflejos_portero

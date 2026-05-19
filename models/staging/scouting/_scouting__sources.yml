@@ -1,0 +1,813 @@
+# _scouting__sources.yml - Source del modelo de scouting
+#=========================================================
+version: 2
+
+sources:
+  - name: scouting
+    description: >
+      Datos crudos de las fuentes de origen, que nos pasa nuestro cliente,
+      con los que quieren que desarrollemos nuestros modelos.
+
+    schema: raw
+    database: "{{ env_var('DBT_ENVIRONMENTS','FAIL') }}_BRONZE_SCOUTING"
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+    tables:
+      #------------------------------------------------------------
+      # country - Países de ligas observadas
+      #------------------------------------------------------------
+      - name: country
+        description: Países en los que se realiza seguimiento a jugadores.
+
+        columns:
+          - name: id
+            description: >
+              ID del pais y de liga, coincide con id_league y country_id de la tabla league.
+              Lo usaremos de conector entre ligas y países y después lo descartaremos.
+            data_type: number
+            data_tests:
+              - unique
+              - not_null
+
+          - name: name
+            description: Nombre del país en inglés.
+            data_type: varchar
+            data_tests:
+              - unique
+              - not_null
+
+      #------------------------------------------------------------
+      # league - Ligas de seguimiento
+      #------------------------------------------------------------
+      - name: league
+        description: Ligas de seguimiento.
+
+        columns:
+          - name: id
+            description: >
+              ID de liga y pais, coincide con id_pais de la tabla country.
+              Será elinimado ya que es igual que country_id.
+            data_type: number
+
+          - name: country_id
+            description: >
+              ID del pais y de liga, coincide con id  de esta tabla y con id_pais de la tabla country.
+              Lo usaremos de conector entre ligas y países y después lo descartaremos.
+            data_type: number
+            data_tests:
+              - not_null
+
+          - name: name
+            description: Nombre de la liga.
+            data_type: varchar
+            data_tests:
+              - unique
+              - not_null
+
+      #------------------------------------------------------------
+      # team - Equipos de ligas que se siguen
+      #------------------------------------------------------------
+      - name: team
+        description: Equipos de ligas que siguen.
+
+        columns:
+          - name: id
+            description: ID desconocido, será eliminado.
+            data_type: number
+
+          - name: team_api_id
+            description: ID generado por la api de descarga. Será eliminado.
+            data_type: number
+
+          - name: team_fifa_api_id
+            description: ID del equipo.
+            data_type: number
+            data_tests:
+              - unique
+              - not_null
+
+          - name: team_long_name
+            description: Nombre del equipo.
+            data_type: varchar
+            data_tests:
+              - unique
+              - not_null
+
+          - name: team_short_name
+            description: Acrónimo de tres letras para el nombre del equipo.
+            data_type: varchar
+            data_tests:
+              - not_null
+
+      #------------------------------------------------------------
+      # player - Lista de jugadores observados
+      #------------------------------------------------------------
+      - name: player
+        description: Lista de jugadores observados.
+        data_tests:
+          - dbt_utils.unique_combination_of_columns:
+              arguments:
+                - player_name
+                - birthday
+
+        columns:
+          - name: id
+            description: >
+              Contador de registros,va en orden creciente y pueden no estar todos.
+              Será eliminado.
+            data_type: number
+            data_tests:
+              - unique
+              - not_null
+
+          - name: player_api_id
+            description: ID generado por la api de descarga. Será eliminado.
+            data_type: number
+
+          - name: player_fifa_api_id
+            description: ID del jugador.
+            data_type: number
+            data_tests:
+              - unique
+              - not_null
+
+          - name: player_name
+            description: Nombre del jugador.
+            data_type: varchar
+            data_tests:
+              - not_null
+
+          - name: birthday
+            description: Fecha de nacimiento.
+            data_type: timestamp_ntz
+            data_tests:
+              - not_null
+
+          - name: height
+            description: Altura en centímetros.
+            data_type: number
+            data_tests:
+              - not_null
+
+          - name: weight
+            description: Peso en libras. Hay que pasarlo a kilogramos.
+            data_type: number
+            data_tests:
+              - not_null
+
+      #------------------------------------------------------------
+      # player_f15_anual - Tabla anual de todos los jugadores
+      #------------------------------------------------------------
+      - name: player_f15_annual
+        description: >
+          Lista ANUAL de todos los jugadores que hay. Se actualiza una vez al año.
+          Incluye tanto jugadores que se están siguiendo como los que no.
+        data_tests:
+        - dbt_utils.unique_combination_of_columns:
+            arguments:
+              - short_name
+              - dob
+
+        columns:
+          - name: sofifa_id
+            description: ID del jugador.
+            data_type: number
+            data_tests:
+              - unique
+              - not_null
+
+          - name: short_name
+            description: Nombre corto (Primera letra del nombre y el apellido).
+            data_type: varchar
+            data_tests:
+              - not_null
+
+          - name: long_name
+            description: Nombre largo.
+            data_type: varchar
+            data_tests:
+              - not_null
+
+          - name: player_positions
+            description: Posiciones del jugador.
+            data_type: varchar
+            data_tests:
+              - not_null
+
+          - name: overall
+            description: Valoración General.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: potential
+            description: Potencial.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: value_eur
+            description: Valor en euros.
+            data_type: number
+            data_tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 0
+
+          - name: wage_eur
+            description: Salario semanal en euros.
+            data_type: number
+            data_tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 0
+
+          - name: dob
+            description: Fecha de nacimiento.
+            data_type: date
+            data_tests:
+              - not_null
+
+          - name: height_cm
+            description: Altura en centímetros.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 140
+                    max_value: 220
+
+          - name: weight_kg
+            description: Peso en kilogramos.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 45
+                    max_value: 120
+
+          - name: club_team_id
+            description: ID de equipo al que pertenece el jugador.
+            data_type: number
+
+          - name: club_name
+            description: Nombre del club.
+            data_type: varchar
+
+          - name: league_name
+            description: Nombre de liga.
+            data_type: varchar
+
+          - name: league_level
+            description: Division de la liga.
+            data_type: number
+
+          - name: nationality_id
+            description: ID de país. El que nos quedaremos, que no coincide con id de la tabla Country.
+            data_type: number
+            data_tests:
+              - not_null
+
+          - name: nationality_name
+            description: Nombre del país en inglés.
+            data_type: varchar
+            data_tests:
+              - not_null
+
+          - name: preferred_foot
+            description: Pie hábil
+            data_type: varchar
+            data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: ["Left", "Right"]
+
+          - name: weak_foot
+            description: Habilidad de la pierna mala.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 5
+
+          - name: skill_moves
+            description: Habilidad para hacer regates y filigranas.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 5
+
+          - name: work_rate
+            description: Trabajo, ofensivo y defensivo.
+            data_type: varchar
+            data_tests:
+              - not_null
+
+          - name: pace
+            description: Ritmo.
+            data_type: number
+            data_tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: shooting
+            description: Tiro.
+            data_type: number
+            data_tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: passing
+            description: Pase.
+            data_type: number
+            data_tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: dribbling
+            description: Regate.
+            data_type: number
+            data_tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: defending
+            description: Defensa.
+            data_type: number
+            data_tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: physic
+            description: Físico.
+            data_type: number
+            data_tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+      #------------------------------------------------------------
+      # player_attributes - Atributos de los jugadores
+      #------------------------------------------------------------
+      - name: player_attributes
+        description: Atributos de los jugadores. Aquí nos actualizan los informes de los jugadores.
+
+        config: #Aunque salga subrayado como error, corre el source freshness.
+          #Aparece porque van actualizando las versiones y la nomenclatura de dbt.
+          loaded_at_field: date
+          freshness:
+            warn_after: { count: 7, period: day }
+            #error_after: {count: 30, period: day }
+
+        columns:
+          - name: id
+            description: >
+              Contador de registros,va en orden creciente y pueden no estar todos.
+              Será eliminado.
+            data_type: number
+            data_tests:
+              - unique
+              - not_null
+
+          - name: player_fifa_api_id
+            description: ID del jugador.
+            data_type: number
+            data_tests:
+              - not_null
+              - relationships:
+                  arguments:
+                    field: player_fifa_api_id
+                    to: source('scouting','player')
+
+          - name: player_api_id
+            description: ID generado por la api de descarga. Será eliminado.
+            data_type: number
+
+          - name: date
+            description: Fecha de actualización.
+            data_type: timestamp_ntz
+            data_tests:
+              - not_null
+
+          - name: overall_rating
+            description: Valoración general.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: potential
+            description: Potencial.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: preferred_foot
+            description: Pie hábil.
+            data_type: varchar
+            data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: ["Left", "Right"]
+
+          - name: attacking_work_rate
+            description: Trabajo ofensivo.
+            data_type: varchar
+            data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: ["High", "Medium", "Low"]
+
+          - name: defensive_work_rate
+            description: Trabajo defensivo.
+            data_type: varchar
+            data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: ["High", "Medium", "Low"]
+
+          # ========== Atributos Ofensivos ====================================
+
+          - name: crossing
+            description: Centros.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: finishing
+            description: Definición
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: heading_accuracy
+            description: Precisión de cabeza.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: short_passing
+            description: Pases cortos.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: volleys
+            description: Voleas.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          # ========== Atributos Técnicos ====================================
+
+          - name: dribbling
+            description: Regates.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: curve
+            description: Efecto.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: free_kick_accuracy
+            description: Precisión de faltas.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: long_passing
+            description: Pases largos.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: ball_control
+            description: Control del balón.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          # ========== Atributos de Movimiento ====================================
+
+          - name: acceleration
+            description: Aceleración.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: sprint_speed
+            description: Velocidad.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: agility
+            description: Agilidad.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: reactions
+            description: Reflejos.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: balance
+            description: Equilibrio.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          # ========== Atributos de Potencia  ====================================
+
+          - name: shot_power
+            description: Potencia de tiro.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: jumping
+            description: Salto.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: stamina
+            description: Resistencia.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: strength
+            description: Fuerza.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: long_shots
+            description: Tiros lejanos.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          # ========== Atributos de Mentalidad ====================================
+
+          - name: aggression
+            description: Agresividad.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: interceptions
+            description: Intercepciones.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: positioning
+            description: Posición ataque.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: vision
+            description: Visión.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: penalties
+            description: Penaltis.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          # ========== Atributos de Defensa ====================================
+
+          - name: marking
+            description: Marcaje.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: standing_tackle
+            description: Robos.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: sliding_tackle
+            description: Entrada agresiva.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          # ========== Atributos de Portero ====================================
+
+          - name: gk_diving
+            description: Estirada.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: gk_handling
+            description: Paradas.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: gk_kicking
+            description: Saques de puerta.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: gk_positioning
+            description: Colocación
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
+          - name: gk_reflexes
+            description: Reflejos de portero.
+            data_type: number
+            data_tests:
+              - not_null
+              - dbt_expectations.expect_column_values_to_be_between:
+                  arguments:
+                    min_value: 1
+                    max_value: 99
+
