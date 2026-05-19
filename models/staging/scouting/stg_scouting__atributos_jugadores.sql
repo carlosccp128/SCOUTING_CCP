@@ -19,8 +19,16 @@ renamed as (
             when lower(trim(preferred_foot)) = 'left' then 'Izquierda'
             when lower(trim(preferred_foot)) = 'right' then 'Derecha'
         end as pierna_habil,
-        defensive_work_rate as trabajo_defensivo,
-        attacking_work_rate as trabajo_ofensivo,
+        case
+            when lower(trim(defensive_work_rate)) = 'low' then 'Bajo'
+            when lower(trim(defensive_work_rate)) = 'medium' then 'Medio'
+            when lower(trim(defensive_work_rate)) = 'high' then 'Alto'
+        end as trabajo_defensivo,
+        case
+            when lower(trim(attacking_work_rate)) = 'low' then 'Bajo'
+            when lower(trim(attacking_work_rate)) = 'medium' then 'Medio'
+            when lower(trim(attacking_work_rate)) = 'high' then 'Alto'
+        end as trabajo_ofensivo,
         crossing as centros,
         finishing as definicion,
         heading_accuracy as precision_cabeza,

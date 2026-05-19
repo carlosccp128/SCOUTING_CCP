@@ -114,8 +114,16 @@ renamed as (
         end as pierna_habil,
         weak_foot as pierna_mala,
         skill_moves as filigranas,
-        strtok(work_rate,'/', 2) as trabajo_defensivo,
-        strtok(work_rate,'/', 1) as trabajo_ofensivo,
+        case
+            when lower(strtok(work_rate,'/', 2)) = 'low' then 'Bajo'
+            when lower(strtok(work_rate,'/', 2)) = 'medium' then 'Medio'
+            when lower(strtok(work_rate,'/', 2)) = 'high' then 'Alto'
+        end as trabajo_defensivo,
+        case
+            when lower(strtok(work_rate,'/', 1)) = 'low' then 'Bajo'
+            when lower(strtok(work_rate,'/', 1)) = 'medium' then 'Medio'
+            when lower(strtok(work_rate,'/', 1)) = 'high' then 'Alto'
+        end as trabajo_ofensivo,
         coalesce(pace,1) as ritmo,
         coalesce(shooting,1) as tiro,
         coalesce(passing,1) as pase,

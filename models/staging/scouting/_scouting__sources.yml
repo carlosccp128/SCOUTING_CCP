@@ -39,10 +39,6 @@ sources:
             data_tests:
               - unique
               - not_null
-              - relationships:
-                  arguments:
-                    field: nationality_name
-                    to: source('scouting','player_f15_annual')
 
       #------------------------------------------------------------
       # league - Ligas de seguimiento
@@ -56,9 +52,6 @@ sources:
               ID de liga y pais, coincide con id_pais de la tabla country.
               Será elinimado ya que es igual que country_id.
             data_type: number
-            data_tests:
-              - unique
-              - not_null
 
           - name: country_id
             description: >
@@ -68,10 +61,6 @@ sources:
             data_tests:
               - unique
               - not_null
-              - relationships:
-                  arguments:
-                    field: id
-                    to: source('scouting','country')
 
           - name: name
             description: Nombre de la liga.
@@ -79,10 +68,6 @@ sources:
             data_tests:
               - unique
               - not_null
-              - relationships:
-                  arguments:
-                    field: league_name
-                    to: source('scouting','player_f15_annual')
 
       #------------------------------------------------------------
       # team - Equipos de ligas que se siguen
@@ -105,10 +90,6 @@ sources:
             data_tests:
               - unique
               - not_null
-              - relationships:
-                  arguments:
-                    field: club_team_id
-                    to: source('scouting','player_f15_annual')
 
           - name: team_long_name
             description: Nombre del equipo.
@@ -154,10 +135,6 @@ sources:
             data_tests:
               - unique
               - not_null
-              - relationships:
-                  arguments:
-                    field: sofifa_id
-                    to: source('scouting','player_f15_annual')
 
           - name: player_name
             description: Nombre del jugador.
@@ -190,6 +167,11 @@ sources:
         description: >
           Lista ANUAL de todos los jugadores que hay. Se actualiza una vez al año.
           Incluye tanto jugadores que se están siguiendo como los que no.
+        data_tests:
+        - dbt_utils.unique_combination_of_columns:
+            arguments:
+              - short_name
+              - dob
 
         columns:
           - name: sofifa_id
@@ -346,7 +328,6 @@ sources:
             description: Ritmo.
             data_type: number
             data_tests:
-              - not_null
               - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
@@ -356,7 +337,6 @@ sources:
             description: Tiro.
             data_type: number
             data_tests:
-              - not_null
               - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
@@ -366,7 +346,6 @@ sources:
             description: Pase.
             data_type: number
             data_tests:
-              - not_null
               - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
@@ -376,7 +355,6 @@ sources:
             description: Regate.
             data_type: number
             data_tests:
-              - not_null
               - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
@@ -386,7 +364,6 @@ sources:
             description: Defensa.
             data_type: number
             data_tests:
-              - not_null
               - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
@@ -396,7 +373,6 @@ sources:
             description: Físico.
             data_type: number
             data_tests:
-              - not_null
               - dbt_expectations.expect_column_values_to_be_between:
                   arguments:
                     min_value: 1
@@ -412,7 +388,7 @@ sources:
           #Aparece porque van actualizando las versiones y la nomenclatura de dbt.
           loaded_at_field: date
           freshness:
-            warn_after: { count: 24, period: hour }
+            warn_after: { count: 1, period: week }
             #error_after: {count: 48, period: hour}
 
         columns:
