@@ -599,3 +599,32 @@ sources:
             description: Reflejos de portero.
             data_type: number
 
+      #--------------------------------------------------------------------
+      # cambios_equipos_jug - Cambios de equipo realizados por los jugadores
+      #--------------------------------------------------------------------
+      - name: cambios_equipos_jug
+        description: Cambios de equipo realizados por los jugadores
+        columns:
+          - name: sofifa_id
+            description: ID del jugador
+            data_type: number
+            data_tests:
+              - not_null
+
+          - name: nombre_jugador
+            description: Nombre del jugador.
+            data_type: varchar
+            data_tests:
+              - not_null
+          
+          - name: equipo
+            description: Nombre del equipo.
+            data_type: varchar
+            data_tests:
+              - not_null
+          
+          - name: desde
+            description: Fecha en la que comenzó a jugar en un equipo.
+            data_type: timestamp
+            data_tests:
+              - not_null
