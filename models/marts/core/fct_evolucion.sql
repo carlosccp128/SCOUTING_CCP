@@ -1,12 +1,12 @@
 -- fct_evolucion.sql
 --==================
 
-with int_evol as(
-    select * from {{ ref('int_scouting__atributos_jugadores') }}
+with stg_atrib as(
+    select * from {{ ref('stg_scouting__atributos_jugadores') }}
 ),
 
-int_jugadores as (
-    select * from {{ ref('int_scouting__jugadores') }}
+stg_list as (
+    select * from {{ ref('stg_scouting__listado_jugadores') }}
 )
 
 select
@@ -14,12 +14,12 @@ select
     s.fecha_actualizacion,
     s.valoracion_general,
     s.potencial,
-    j.posicion_id,
-    j.id_equipo,
-    j.id_liga,
-    j.id_pais
-from int_evol as s
-left join int_jugadores as j
-    on s.id_jugador = j.id_jugador
+    l.posicion_id,
+    l.id_equipo,
+    l.id_liga,
+    l.id_pais
+from stg_atrib as s
+left join stg_list as l
+    on s.id_jugador = l.id_jugador
 
 --ampliar con resumen de atributos
