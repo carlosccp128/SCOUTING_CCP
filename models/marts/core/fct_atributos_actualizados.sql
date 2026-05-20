@@ -20,7 +20,7 @@ with nuevos_reg as (
 
 reg_limpios as (
 select
-    *,
+    *
 from nuevos_reg
 qualify row_number() over (
         partition by id_jugador
