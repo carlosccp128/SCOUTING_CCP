@@ -628,6 +628,6 @@ sources:
           
           - name: desde
             description: Fecha en la que comenzó a jugar en un equipo.
-            data_type: varchar
+            data_type: timestamp
             data_tests:
               - not_null
