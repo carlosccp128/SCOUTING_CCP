@@ -40,7 +40,7 @@ select
     l.id_liga,
     l.nombre_liga,
     j.division_liga,
-    p.id_pais
+    coalesce(p.id_pais, '31') as id_pais
 
 from stg_ligas as l
 left join list_liga as j
@@ -48,4 +48,6 @@ left join list_liga as j
 left join pais_ident as p
     on l.id_pais_liga = p.id_pais_liga
 
-
+--Hacemos coalesce para controlar que Mercado de Fichajes no tiene liga.
+--Le asignamos 31-Luxemburgo por ser un país sin una liga profesional y
+-- con sedes europeas, por lo que engloba un poco nuestro mercado.

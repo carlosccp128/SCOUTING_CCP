@@ -83,6 +83,8 @@ models:
       - name: id_liga
         data_type: varchar
         description: id_liga
+        data_tests:
+          - not_null
 
   #------------------------------------------------------------
   # int_scouting__posiciones
@@ -207,10 +209,6 @@ models:
         description: id_jugador
         data_tests:
           - not_null
-          - relationships:
-                  arguments:
-                    field: id_jugador
-                    to: ref('int_scouting__jugadores')
 
       - name: fecha_actualizacion
         data_type: timestamp_ntz

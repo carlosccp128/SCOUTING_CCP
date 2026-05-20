@@ -1,8 +1,8 @@
 -- fct_evolucion.sql
 --==================
 
-with snp_evol as(
-    select * from {{ ref('snp_evolucion') }}
+with int_evol as(
+    select * from {{ ref('int_scouting__atributos_jugadores') }}
 ),
 
 int_jugadores as (
@@ -18,7 +18,7 @@ select
     j.id_equipo,
     j.id_liga,
     j.id_pais
-from snp_evol as s
+from int_evol as s
 left join int_jugadores as j
     on s.id_jugador = j.id_jugador
 

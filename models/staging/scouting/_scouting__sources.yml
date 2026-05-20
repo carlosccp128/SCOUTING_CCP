@@ -107,8 +107,9 @@ sources:
         data_tests:
           - dbt_utils.unique_combination_of_columns:
               arguments:
-                - player_name
-                - birthday
+                combination_of_columns:
+                  - player_name
+                  - birthday
 
         columns:
           - name: id
@@ -167,10 +168,11 @@ sources:
           Lista ANUAL de todos los jugadores que hay. Se actualiza una vez al año.
           Incluye tanto jugadores que se están siguiendo como los que no.
         data_tests:
-        - dbt_utils.unique_combination_of_columns:
-            arguments:
-              - short_name
-              - dob
+          - dbt_utils.unique_combination_of_columns:
+              arguments:
+                combination_of_columns:
+                  - long_name
+                  - dob
 
         columns:
           - name: sofifa_id

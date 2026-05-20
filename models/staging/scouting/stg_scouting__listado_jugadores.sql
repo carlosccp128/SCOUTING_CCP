@@ -44,7 +44,7 @@ pais_position as (
 
     from src_player_annual as j
     left join seed_paises as p
-        on trim(j.nationality_name) = trim(p.pais_eng)
+        on trim(lower(j.nationality_name)) = trim(lower(p.pais_eng))
 ),
 
 position_esp as (
@@ -103,7 +103,7 @@ renamed as (
         weight_kg as peso_kg,
         coalesce(club_team_id,0) as id_equipo,
         coalesce(club_name, 'Agentes libres') as nombre_equipo,
-        {{ dbt_utils.generate_surrogate_key(['trim(league_name)']) }} as id_liga,
+        {{ dbt_utils.generate_surrogate_key(["trim(coalesce(league_name,'Mercado de Fichajes'))"]) }} as id_liga,
         coalesce(league_name, 'Mercado de Fichajes') as nombre_liga,
         coalesce(league_level,0) as division_liga,
         nationality_id as id_pais,

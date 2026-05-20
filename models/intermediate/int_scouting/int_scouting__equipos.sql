@@ -21,5 +21,5 @@ select
     l.id_liga
 
 from stg_equipos as e
-left join eq_lig as l
+inner join eq_lig as l
     on e.id_equipo = l.id_equipo
