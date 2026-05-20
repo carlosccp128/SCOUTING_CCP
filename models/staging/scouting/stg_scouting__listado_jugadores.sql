@@ -91,9 +91,9 @@ renamed as (
         sofifa_id as id_jugador,
         short_name as nombre_jugador_corto,
         long_name as nombre_jugador_largo,
-        coalesce(posicion_id, 0)
-        coalesce(posicion_nombre, 'Desconocida')
-        coalesce(posicion, 'N/A')
+        coalesce(posicion_id, 0) as posicion_id,
+        coalesce(posicion_nombre, 'Desconocida') as posicion_nombre,
+        coalesce(posicion, 'N/A') as posicion,
         overall as valoracion_general,
         potential as potencial,
         coalesce(value_eur, 0) as valor_mercado,
