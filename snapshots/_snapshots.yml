@@ -1,0 +1,17 @@
+# snapshots/_snapshots.yml
+#=========================
+
+version: 2
+
+snapshots:
+  - name: snp_equipos_jugador
+    description: "Historial de cambios de equipo por jugador"
+    columns:
+      - name: sofifa_id
+        description: "ID único del jugador"
+      - name: nombre_jugador
+        description: "Nombre del jugador"
+      - name: equipo
+        description: "Equipo del jugador en ese momento"
+      - name: desde
+        description: "Fecha desde la que el jugador pertenece al equipo"
