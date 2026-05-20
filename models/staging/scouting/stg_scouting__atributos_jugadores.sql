@@ -6,12 +6,12 @@ with src_player_attributes as (
 ),
 
 jugadores as (
-    select * from {{ ref('stg_scouting__jugadores') }}
+    select * from {{ source('scouting', 'player') }}
 ),
 
 renamed as (
     select
-        player_fifa_api_id as id_jugador,
+        att.player_fifa_api_id as id_jugador,
         date as fecha_actualizacion,
         overall_rating as valoracion_general,
         potential as potencial,
@@ -68,7 +68,7 @@ renamed as (
 
     from src_player_attributes as att
     inner join jugadores as j
-    on att.player_fifa_api_id = j.id_jugador
+    on att.player_fifa_api_id = j.player_fifa_api_id
     where overall_rating is not null
         and fecha_actualizacion > '2010-08-12'
 
