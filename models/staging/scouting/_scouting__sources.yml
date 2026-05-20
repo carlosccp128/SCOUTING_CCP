@@ -384,6 +384,20 @@ sources:
       #------------------------------------------------------------
       - name: player_attributes
         description: Atributos de los jugadores. Aquí nos actualizan los informes de los jugadores.
+        data_tests:
+          - expect_columns_between_except:
+              arguments:
+                min_value: 1
+                max_value: 99
+                except:
+                  - id
+                  - player_api_id
+                  - player_fifa_api_id
+                  - date
+                  - preferred_foot
+                  - attacking_work_rate
+                  - defensive_work_rate
+
 
         config: #Aunque salga subrayado como error, corre el source freshness.
           #Aparece porque van actualizando las versiones y la nomenclatura de dbt.
@@ -421,20 +435,10 @@ sources:
           - name: overall_rating
             description: Valoración general.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: potential
             description: Potencial.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: preferred_foot
             description: Pie hábil.
@@ -454,309 +458,144 @@ sources:
           - name: crossing
             description: Centros.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: finishing
             description: Definición
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: heading_accuracy
             description: Precisión de cabeza.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: short_passing
             description: Pases cortos.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: volleys
             description: Voleas.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           # ========== Atributos Técnicos ====================================
 
           - name: dribbling
             description: Regates.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: curve
             description: Efecto.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: free_kick_accuracy
             description: Precisión de faltas.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: long_passing
             description: Pases largos.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: ball_control
             description: Control del balón.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           # ========== Atributos de Movimiento ====================================
 
           - name: acceleration
             description: Aceleración.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: sprint_speed
             description: Velocidad.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: agility
             description: Agilidad.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: reactions
             description: Reflejos.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: balance
             description: Equilibrio.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           # ========== Atributos de Potencia  ====================================
 
           - name: shot_power
             description: Potencia de tiro.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: jumping
             description: Salto.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: stamina
             description: Resistencia.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: strength
             description: Fuerza.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: long_shots
             description: Tiros lejanos.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           # ========== Atributos de Mentalidad ====================================
 
           - name: aggression
             description: Agresividad.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: interceptions
             description: Intercepciones.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: positioning
             description: Posición ataque.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: vision
             description: Visión.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: penalties
             description: Penaltis.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           # ========== Atributos de Defensa ====================================
 
           - name: marking
             description: Marcaje.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: standing_tackle
             description: Robos.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: sliding_tackle
             description: Entrada agresiva.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           # ========== Atributos de Portero ====================================
 
           - name: gk_diving
             description: Estirada.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: gk_handling
             description: Paradas.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: gk_kicking
             description: Saques de puerta.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: gk_positioning
             description: Colocación
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
           - name: gk_reflexes
             description: Reflejos de portero.
             data_type: number
-            data_tests:
-              - dbt_expectations.expect_column_values_to_be_between:
-                  arguments:
-                    min_value: 1
-                    max_value: 99
 
