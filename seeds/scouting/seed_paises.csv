@@ -1,0 +1,150 @@
+PAIS_ID,PAIS_ENG,PAIS_ESP,ISO_3
+1,Albania,Albania,ALB
+3,Armenia,Armenia,ARM
+4,Austria,Austria,AUT
+5,Azerbaijan,Azerbaiyán,AZE
+6,Belarus,Bielorrusia,BLR
+7,Belgium,Bélgica,BEL
+8,Bosnia and Herzegovina,Bosnia y Herzegovina,BIH
+9,Bulgaria,Bulgaria,BGR
+10,Croatia,Croacia,HRV
+11,Cyprus,Chipre,CYP
+12,Czech Republic,República Checa,CZE
+13,Denmark,Dinamarca,DNK
+14,England,Inglaterra,ENG
+15,Montenegro,Montenegro,MNE
+16,Faroe Islands,Islas Feroe,FRO
+17,Finland,Finlandia,FIN
+18,France,Francia,FRA
+19,North Macedonia,Macedonia del Norte,MKD
+20,Georgia,Georgia,GEO
+21,Germany,Alemania,DEU
+22,Greece,Grecia,GRC
+23,Hungary,Hungría,HUN
+24,Iceland,Islandia,ISL
+25,Republic of Ireland,República de Irlanda,IRL
+26,Israel,Israel,ISR
+27,Italy,Italia,ITA
+28,Latvia,Letonia,LVA
+29,Liechtenstein,Liechtenstein,LIE
+30,Lithuania,Lituania,LTU
+31,Luxembourg,Luxemburgo,LUX
+32,Malta,Malta,MLT
+33,Moldova,Moldavia,MDA
+34,Netherlands,Países Bajos,NLD
+35,Northern Ireland,Irlanda del Norte,NIR
+36,Norway,Noruega,NOR
+37,Poland,Polonia,POL
+38,Portugal,Portugal,PRT
+39,Romania,Rumanía,ROU
+40,Russia,Rusia,RUS
+42,Scotland,Escocia,SCO
+43,Slovakia,Eslovaquia,SVK
+44,Slovenia,Eslovenia,SVN
+45,Spain,España,ESP
+46,Sweden,Suecia,SWE
+47,Switzerland,Suiza,CHE
+48,Turkey,Turquía,TUR
+49,Ukraine,Ucrania,UKR
+50,Wales,Gales,WAL
+51,Serbia,Serbia,SRB
+52,Argentina,Argentina,ARG
+53,Bolivia,Bolivia,BOL
+54,Brazil,Brasil,BRA
+55,Chile,Chile,CHL
+56,Colombia,Colombia,COL
+57,Ecuador,Ecuador,ECU
+58,Paraguay,Paraguay,PRY
+59,Peru,Perú,PER
+60,Uruguay,Uruguay,URY
+61,Venezuela,Venezuela,VEN
+63,Antigua and Barbuda,Antigua y Barbuda,ATG
+66,Barbados,Barbados,BRB
+68,Bermuda,Bermudas,BMU
+70,Canada,Canadá,CAN
+72,Costa Rica,Costa Rica,CRI
+73,Cuba,Cuba,CUB
+77,Grenada,Granada,GRD
+78,Guatemala,Guatemala,GTM
+79,Guyana,Guyana,GUY
+80,Haiti,Haití,HTI
+81,Honduras,Honduras,HND
+82,Jamaica,Jamaica,JAM
+83,Mexico,México,MEX
+84,Montserrat,Montserrat,MSR
+85,Curacao,Curazao,CUW
+87,Panama,Panamá,PAN
+89,Saint Kitts and Nevis,San Cristóbal y Nieves,KNA
+90,Saint Lucia,Santa Lucía,LCA
+92,Suriname,Surinam,SUR
+93,Trinidad and Tobago,Trinidad y Tobago,TTO
+95,United States,Estados Unidos,USA
+97,Algeria,Argelia,DZA
+98,Angola,Angola,AGO
+99,Benin,Benín,BEN
+101,Burkina Faso,Burkina Faso,BFA
+102,Burundi,Burundi,BDI
+103,Cameroon,Camerún,CMR
+104,Cape Verde Islands,Cabo Verde,CPV
+105,Central African Republic,República Centroafricana,CAF
+107,Congo,Congo,COG
+108,Côte d'Ivoire,Costa de Marfil,CIV
+110,Congo DR,República Democrática del Congo,COD
+111,Egypt,Egipto,EGY
+112,Equatorial Guinea,Guinea Ecuatorial,GNQ
+115,Gabon,Gabón,GAB
+116,Gambia,Gambia,GMB
+117,Ghana,Ghana,GHA
+118,Guinea,Guinea,GIN
+119,Guinea Bissau,Guinea-Bisáu,GNB
+120,Kenya,Kenia,KEN
+122,Liberia,Liberia,LBR
+123,Libya,Libia,LBY
+124,Madagascar,Madagascar,MDG
+126,Mali,Malí,MLI
+127,Mauritania,Mauritania,MRT
+129,Morocco,Marruecos,MAR
+130,Mozambique,Mozambique,MOZ
+132,Niger,Níger,NER
+133,Nigeria,Nigeria,NGA
+136,Senegal,Senegal,SEN
+138,Sierra Leone,Sierra Leona,SLE
+140,South Africa,Sudáfrica,ZAF
+141,Sudan,Sudán,SDN
+144,Togo,Togo,TGO
+145,Tunisia,Túnez,TUN
+146,Uganda,Uganda,UGA
+147,Zambia,Zambia,ZMB
+148,Zimbabwe,Zimbabue,ZWE
+150,Bahrain,Baréin,BHR
+154,Cambodia,Camboya,KHM
+155,China PR,China,CHN
+157,Guam,Guam,GUM
+159,India,India,IND
+160,Indonesia,Indonesia,IDN
+161,Iran,Irán,IRN
+162,Iraq,Irak,IRQ
+163,Japan,Japón,JPN
+164,Jordan,Jordania,JOR
+165,Kazakhstan,Kazajistán,KAZ
+166,Korea DPR,Corea del Norte,PRK
+167,Korea Republic,Corea del Sur,KOR
+168,Kuwait,Kuwait,KWT
+169,Kyrgyzstan,Kirguistán,KGZ
+171,Lebanon,Líbano,LBN
+178,Oman,Omán,OMN
+180,Palestine,Palestina,PSE
+181,Philippines,Filipinas,PHL
+183,Saudi Arabia,Arabia Saudita,SAU
+186,Syria,Siria,SYR
+188,Thailand,Tailandia,THA
+189,Turkmenistan,Turkmenistán,TKM
+191,Uzbekistan,Uzbekistán,UZB
+195,Australia,Australia,AUS
+197,Fiji,Fiyi,FJI
+198,New Zealand,Nueva Zelanda,NZL
+205,Gibraltar,Gibraltar,GIB
+208,Estonia,Estonia,EST
+214,Comoros,Comoras,COM
+215,New Caledonia,Nueva Caledonia,NCL
+219,Kosovo,Kosovo,XKX

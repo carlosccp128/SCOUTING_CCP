@@ -1,0 +1,71 @@
+version: 2
+
+seeds:
+  #------------------------------------------------------------
+  # seed_paises
+  #------------------------------------------------------------
+  - name: seed_paises
+    description: "Tabla de referencia estática con los países utilizados en el proyecto. Incluye el identificador numérico, el nombre en inglés y español, y el código ISO 3166-1 alpha-3. Cubre países de Europa, América, África, Asia y Oceanía."
+    columns:
+      - name: pais_id
+        data_type: number
+        description: "Identificador único numérico del país. Clave primaria del seed. Los IDs no son necesariamente consecutivos al provenir de una fuente externa."
+        tests:
+          - unique
+          - not_null
+
+      - name: pais_eng
+        data_type: varchar
+        description: "Nombre oficial del país en inglés."
+        tests:
+          - not_null
+
+      - name: pais_esp
+        data_type: varchar
+        description: "Nombre oficial del país traducido al español."
+        tests:
+          - not_null
+
+      - name: iso_3
+        data_type: varchar
+        description: "Código de país según el estándar ISO 3166-1 alpha-3. Para territorios sin código ISO oficial (p. ej. Kosovo, Inglaterra, Escocia, Gales, Gibraltar) se utilizan códigos FIFA o convencionales ampliamente aceptados."
+        tests:
+          - unique
+          - not_null
+
+  #------------------------------------------------------------
+  # seed_posiciones
+  #------------------------------------------------------------
+  - name: seed_posiciones
+    description: "Tabla de referencia estática con las posiciones de juego del fútbol. Contiene el identificador de posición, la denominación en español e inglés, y los acrónimos en ambos idiomas, cubriendo todas las posiciones desde portero hasta delantero centro."
+    columns:
+      - name: posicion_id
+        data_type: number
+        description: "Identificador único numérico de la posición. Clave primaria del seed. El valor 0 representa una posición desconocida o no asignada."
+        tests:
+          - unique
+          - not_null
+
+      - name: posicion_esp
+        data_type: varchar
+        description: "Nombre de la posición en español (p. ej. Portero, Defensa Central, Mediocentro Defensivo)."
+        tests:
+          - not_null
+
+      - name: acronimo_esp
+        data_type: varchar
+        description: "Acrónimo de la posición en español (p. ej. POR, DFC, MCD). Notación abreviada de uso común en el fútbol hispanohablante."
+        tests:
+          - not_null
+
+      - name: acronimo_eng
+        data_type: varchar
+        description: "Acrónimo de la posición en inglés, siguiendo la nomenclatura estándar internacional (p. ej. GK, CB, CDM, ST)."
+        tests:
+          - not_null
+
+      - name: posicion_eng
+        data_type: varchar
+        description: "Nombre completo de la posición en inglés (p. ej. Goalkeeper, Center Back, Striker)."
+        tests:
+          - not_null
