@@ -24,7 +24,7 @@ select
 from nuevos_reg
 qualify row_number() over (
         partition by id_jugador
-        order by fecha_actualizacion desc
+        order by fecha_actualizacion desc, valoracion_general asc
     ) = 1
 ),
 
