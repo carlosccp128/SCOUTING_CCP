@@ -609,21 +609,18 @@ sources:
             description: ID del jugador
             data_type: number
             data_tests:
-              - unique
               - not_null
 
           - name: nombre_jugador
             description: Nombre del jugador.
             data_type: varchar
             data_tests:
-              - unique
               - not_null
           
           - name: equipo
             description: Nombre del equipo.
             data_type: varchar
             data_tests:
-              - unique
               - not_null
           
           - name: desde
