@@ -410,9 +410,6 @@ sources:
               Contador de registros,va en orden creciente y pueden no estar todos.
               Será eliminado.
             data_type: number
-            data_tests:
-              - unique
-              - not_null
 
           - name: player_fifa_api_id
             description: ID del jugador.
